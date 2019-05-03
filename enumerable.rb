@@ -50,10 +50,14 @@ def my_none?
 end
 
 def my_count
-    return self.length.to_enum unless block_given?
     count = 0
-    self.my_each {|element| count += 1  if yield(element)}
-    return count
+    if !block_given?
+      self.my_each {|element| count += 1}
+      return count
+    else
+      self.my_each {|element| count += 1  if yield(element)}
+      return count
+    end
 end
 
 
@@ -74,3 +78,5 @@ end
 def multiply_els(memo, obj)
     obj.my_inject(memo){|holder, element| holder * element}
 end
+
+#puts [1,2,3,4,5].my_count
